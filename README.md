@@ -1,27 +1,38 @@
-# TaskTodoApp
+# Тестовое задание Frontend-разработчика
+Тестовое задание рассчитано на angular разработчика, но можно
+выполнить и на любом другом фреймворке/библиотеке.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.3.
+## Задача
+Реализовать простой менеджер задач (только фронт, без бэкенда),
+состоящий из трех страниц: список задач с фильтром, просмотр
+задачи и страница редактирования.
 
-## Development server
+Карточка задачи состоит из полей: название, описание, дата создания,
+приоритет (low, normal, high) и отметки (research, design, development).
+Отметок можно указать несколько или ни одной.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Тестовые данные можно замокать и имитировать загрузку с сервера.
 
-## Code scaffolding
+## Условия
+- Одностраничные приложение (SPA)
+- Отобразить 15 карточек и подгружать еще по 15 когда скролл
+приближается к нижней границе экрана
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Макет
+Макет должен нормально отображается на любом разрешении. Шрифты,
+расстояние между блоками, цвета и тому подобное можно не соблюдать.
+Не используйте библиотеки компонентов (типа angular material), нам
+нужно оценить верстку.
+![](preview.jpg?raw=true)
 
-## Build
+## Дополнительные задания
+Выполнять не обязательно. Рассчитывайте силы и время готовое потратить
+на выполнение заданий.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- Lazy load модулей каждой страницы
+- Реализовать сортировку/фильтрацию по дате создания (новые или старые),
+приоритету и отметкам
+- Реализовать простейший CRUD на бэкенде для карточек, на языке
+PHP или NodeJS. Можно использовать любой фреймворк или библиотеку
+(мы используем Symfony и NestJS)
+- Реализовать Server-Side Rendering приложения (Angular, React, Vue)
