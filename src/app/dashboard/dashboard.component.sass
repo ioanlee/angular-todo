@@ -1,0 +1,113 @@
+$defaultGap: 20px
+$sidebarWidth: 250px
+$blue: dodgerblue
+   
+.main
+   gap: $defaultGap
+   width: 100%
+   margin: auto
+   padding: 50px
+   max-width: 1000px
+   @media screen and ( max-width: 600px )
+      padding: 3vh
+      flex-direction: column
+
+   .sidebar
+      gap: $defaultGap
+      position: fixed
+      min-width: $sidebarWidth
+      @media screen and ( max-width: 600px )
+         position: static
+
+      .block
+         gap: $defaultGap
+         
+      h2
+         margin: 5px 0
+         font-size: 12px
+         font-weight: bold
+         text-transform: uppercase
+
+      input[type="radio"]
+         opacity: 0
+         position: absolute
+
+         & + .radio-label
+            width: fit-content
+            cursor: pointer
+            padding: 5px
+            
+            &:before
+               top: 0.3em
+               width: 20px
+               height: 20px
+               cursor: pointer
+               content: ''
+               border: 1px solid darkgrey
+               display: inline-block
+               position: relative
+               transition: all 250ms ease
+               margin-right: 1em
+               border-radius: 100%
+         
+         &:checked + .radio-label:before
+            box-shadow: inset 0 0 0 4px white
+            border-color: $blue
+            background-color: $blue
+
+      input[type="checkbox"]
+         opacity: 0
+         position: absolute
+
+         & + .checkbox-label
+            width: fit-content
+            cursor: pointer
+            padding: 5px
+            text-align: center
+
+            &:before
+               content: ""
+               width: 20px
+               height: 20px
+               cursor: pointer
+               border: 1px solid darkgrey
+               display: inline-block
+               transition: all 250ms ease
+               padding-top: 2px
+               margin-right: 1em
+               border-radius: 3px
+               vertical-align: middle
+
+         &:checked + .checkbox-label:before
+            content: "\2714"
+            color: $blue
+            border-color: $blue
+
+   .content
+      gap: $defaultGap
+      width: 100%
+      margin-left: $sidebarWidth + $defaultGap
+      @media screen and ( max-width: 600px )
+         margin: 0
+
+
+      nav
+         gap: $defaultGap / 2
+
+      .tasks
+         gap: $defaultGap
+
+         .task            
+            gap: 5px
+            min-width: 250px
+            min-height: 120px            
+
+            a
+               color: grey
+               font-size: 18px
+               transition: .2s
+               font-weight: 500
+               line-height: 200%
+               text-decoration: none
+               &:hover
+                  color: $blue

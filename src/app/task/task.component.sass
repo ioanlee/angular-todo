@@ -1,0 +1,31 @@
+$defaultGap: 20px
+	
+main
+	gap: $defaultGap
+	width: 100%
+	margin: auto
+	padding: 50px
+	max-width: 1000px
+	@media screen and ( max-width: 600px )
+		padding: 3vh
+		flex-direction: column
+
+	nav
+		gap: $defaultGap / 2
+
+		button:last-of-type
+			margin-left: auto
+
+	.task
+		gap: $defaultGap
+
+		section
+
+			h2
+				margin: 15px 0
+				font-size: 12px
+				font-weight: bold
+				text-transform: uppercase
+
+			span
+				margin: auto 0

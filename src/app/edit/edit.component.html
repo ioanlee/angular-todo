@@ -1,0 +1,35 @@
+<main class="flex-col">   
+   <nav class="flex-row">
+      <button class="button inverted" routerLink="/">Назад</button>
+   </nav>
+   <div class="flex-col block edit">
+      <section class="flex-col">
+         <h2>Название задачи</h2>
+         <input class="block " type="text">
+      </section>
+      <section class="flex-col not-full-width">
+         <h2>Приоритет</h2>
+         <select class="block" name="" id="">
+            <option value="low">Low</option>
+            <option value="normal">Normal</option>
+            <option value="high">High</option>
+         </select>
+      </section>
+      <section class="flex-col not-full-width">
+         <h2>Отметки</h2>
+         <div class="flex-col block">
+            <input type="checkbox" name="filter-tag" id="filter-tag-res">
+            <label class="checkbox-label" for="filter-tag-res">Research</label>
+            <input type="checkbox" name="filter-tag" id="filter-tag-des">
+            <label class="checkbox-label" for="filter-tag-des">Design</label>
+            <input type="checkbox" name="filter-tag" id="filter-tag-dev">
+            <label class="checkbox-label" for="filter-tag-dev">Development</label>
+         </div>
+      </section>
+      <section class="flex-col">
+         <h2>Описание</h2>
+         <textarea class="block" name="" id="" cols="30" rows="10" placeholder="description goes here..."></textarea>
+      </section>
+      <button class="button" routerLink="/task">Сохранить</button>
+   </div>
+</main>

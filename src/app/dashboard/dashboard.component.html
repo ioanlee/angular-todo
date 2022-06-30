@@ -1,0 +1,46 @@
+<main class="flex-row main">
+   <aside class="sidebar flex-col">
+      <div class="block flex-col">
+         <section class="flex-col">
+            <h2>Сортировка</h2>
+            <input type="radio" name="sortby" id="sortby-newest" checked>
+            <label class="radio-label" for="sortby-newest">Новые</label>
+            <input type="radio" name="sortby" id="sortby-oldest">
+            <label class="radio-label" for="sortby-oldest">Старые</label>
+         </section>
+      </div>
+      <div class="flex-col block task">
+         <section class="flex-col">
+            <h2>Приоритет</h2>
+            <input onchange="setFilterByPriority()" type="checkbox" name="filter-priority" id="filter-priority-high">
+            <label class="checkbox-label" for="filter-priority-high">High</label>
+            <input type="checkbox" name="filter-priority" id="filter-priority-normal">
+            <label class="checkbox-label" for="filter-priority-normal">Normal</label>
+            <input type="checkbox" name="filter-priority" id="filter-priority-low">
+            <label class="checkbox-label" for="filter-priority-low">Low</label>
+         </section>
+         <section class="flex-col">
+            <h2>Отметка</h2>
+            <input type="checkbox" name="filter-tag" id="filter-tag-res">
+            <label class="checkbox-label" for="filter-tag-res">Research</label>
+            <input type="checkbox" name="filter-tag" id="filter-tag-des">
+            <label class="checkbox-label" for="filter-tag-des">Design</label>
+            <input type="checkbox" name="filter-tag" id="filter-tag-dev">
+            <label class="checkbox-label" for="filter-tag-dev">Development</label>
+         </section>
+      </div>
+   </aside>
+   <div class="content flex-col">
+      <nav class="flex-row">
+         <button class="button" routerLink="/edit">Добавить задачу</button>
+      </nav>
+      <div class="tasks flex-col" *ngFor="let task of filteredTasks">
+         <div class="task block flex-col">
+            <a routerLink="/task">{{ task.title }}</a>
+            <span>Создано: только что</span>
+            <span>Приоритет: {{ task.priority }}</span>
+            <span>Отметки: design, development</span>
+         </div>
+      </div>
+   </div>
+</main>

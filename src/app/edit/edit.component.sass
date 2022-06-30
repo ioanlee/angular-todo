@@ -1,0 +1,42 @@
+$defaultGap: 20px
+	
+main
+	gap: $defaultGap
+	width: 100%
+	margin: auto
+	padding: 50px
+	max-width: 1000px
+	@media screen and ( max-width: 600px )
+		padding: 3vh
+		flex-direction: column
+
+	.edit
+		gap: $defaultGap
+
+		section
+
+			.block
+				padding: 10px
+				outline: none		
+
+			&.not-full-width
+				max-width: 250px
+
+			h2
+				margin: 10px 0
+				font-size: 12px
+				font-weight: bold
+				text-transform: uppercase
+
+			input[type="checkbox"]
+				opacity: 0
+				position: absolute
+
+				& + label
+					padding: 2px 0
+				
+				&:checked + label
+					background-color: lightgrey
+
+			textarea
+				resize: none
