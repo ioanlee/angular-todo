@@ -13,7 +13,7 @@ import { EditComponent } from './edit/edit.component'
 const routes:Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'task', component: TaskComponent },
+  { path: 'task/:id', component: TaskComponent },
   { path: 'edit', component: EditComponent },
   { path: '**', redirectTo: '/dashboard' },
 ]

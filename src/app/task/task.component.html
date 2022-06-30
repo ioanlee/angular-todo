@@ -7,19 +7,19 @@
    <div class="flex-col block task">
       <section class="flex-col">
          <h2>Название задачи</h2>
-         <p><span>Тестовая задача №1</span></p>
+         <p><span>{{ task.title }}</span></p>
       </section>
       <section class="flex-col">
          <h2>Дата создания</h2>
-         <p><span>20 октября 2020, 16:25</span></p>
+         <p><span>{{ convertTimestamp(task.timestamp) }}</span></p>
       </section>
       <section class="flex-col">
          <h2>Приоритет</h2>
-         <p><span>normal</span></p>
+         <p><span>{{ task.priority }}</span></p>
       </section>
       <section class="flex-col">
          <h2>Отметки</h2>
-         <p><span>research</span></p>
+         <p><span>{{ task.tags }}</span></p>
       </section>
       <section class="flex-col">
          <h2>Описание</h2>

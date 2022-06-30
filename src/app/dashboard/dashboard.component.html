@@ -3,10 +3,10 @@
       <div class="block flex-col">
          <section class="flex-col">
             <h2>Сортировка</h2>
-            <input type="radio" name="sortby" id="sortby-newest" [defaultChecked]="true">
+            <input type="radio" (input)="setSort(true)" name="sortby" id="sortby-newest" value="true" [defaultChecked]="true">
             <label class="radio-label" for="sortby-newest">Новые</label>
-            <input type="radio" name="sortby" id="sortby-oldest">
-            <label class="radio-label" for="sortby-oldest">Старые</label>
+            <input type="radio" (input)="setSort(false)" name="sortby" id="sortby-oldest">
+            <label class="radio-label" for="sortby-oldest"  value="false">Старые</label>
          </section>
       </div>
       <div class="flex-col block task">
@@ -21,12 +21,12 @@
          </section>
          <section class="flex-col">
             <h2>Отметка</h2>
-            <input #resTagInput (input)="setFilterTag(resTagInput)" type="checkbox" name="filter-tag" value="res" id="filter-tag-res">
-            <label class="checkbox-label" for="filter-tag-res">Research</label>
-            <input #desTagInput (input)="setFilterTag(desTagInput)" type="checkbox" name="filter-tag" value="des" id="filter-tag-des">
-            <label class="checkbox-label" for="filter-tag-des">Design</label>
-            <input #devTagInput (input)="setFilterTag(devTagInput)" type="checkbox" name="filter-tag" value="dev" id="filter-tag-dev">
-            <label class="checkbox-label" for="filter-tag-dev">Development</label>
+            <input #researchTagInput (input)="setFilterTag(researchTagInput)" type="checkbox" name="filter-tag" value="research" id="filter-tag-research">
+            <label class="checkbox-label" for="filter-tag-research">Research</label>
+            <input #designTagInput (input)="setFilterTag(designTagInput)" type="checkbox" name="filter-tag" value="design" id="filter-tag-design">
+            <label class="checkbox-label" for="filter-tag-design">Design</label>
+            <input #developmentTagInput (input)="setFilterTag(developmentTagInput)" type="checkbox" name="filter-tag" value="development" id="filter-tag-development">
+            <label class="checkbox-label" for="filter-tag-development">Development</label>
          </section>
       </div>
    </aside>
@@ -36,10 +36,10 @@
       </nav>
       <div class="tasks flex-col" *ngFor="let task of tasks">
          <div class="task block flex-col">
-            <a routerLink="/task">{{ task.title }}</a>
-            <span>Создано: только что</span>
+            <a routerLink="/task/{{ task.id }}">{{ task.title }}</a>
+            <span>Создано: {{ convertTimestamp(task.timestamp) }}</span>
             <span>Приоритет: {{ task.priority }}</span>
-            <span>Отметки: design, development</span>
+            <span>Отметки: <span *ngFor="let tag of task.tags">{{ tag }}</span></span>
          </div>
       </div>
    </div>
