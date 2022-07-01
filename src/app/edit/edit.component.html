@@ -1,34 +1,36 @@
 <main class="flex-col">   
    <nav class="flex-row">
-      <button class="button inverted" routerLink="/">Назад</button>
+      <div *ngIf="id; then thenBlock else elseBlock"></div>
+      <ng-template #thenBlock><button class="button inverted" routerLink="/task/{{ id }}">Назад</button></ng-template>
+      <ng-template #elseBlock><button class="button inverted" routerLink="/">Назад</button></ng-template>
    </nav>
    <div class="flex-col block edit">
       <section class="flex-col">
          <h2>Название задачи</h2>
-         <input class="block " type="text">
+         <input class="block" type="text" value="{{ task.title || '' }}">
       </section>
       <section class="flex-col not-full-width">
          <h2>Приоритет</h2>
          <select class="block" name="" id="">
-            <option value="low">Low</option>
-            <option value="normal">Normal</option>
-            <option value="high">High</option>
+            <option value="normal" [selected]="task.priority === 'normal'">Normal</option>
+            <option value="high" [selected]="task.priority === 'high'">High</option>
+            <option value="low" [selected]="task.priority === 'low'">Low</option>
          </select>
       </section>
       <section class="flex-col not-full-width">
          <h2>Отметки</h2>
          <div class="flex-col block">
-            <input type="checkbox" name="filter-tag" id="filter-tag-res">
+            <input type="checkbox" name="filter-tag" id="filter-tag-res" [checked]="task.tags.includes('research') ? 'checked' : ''">
             <label class="checkbox-label" for="filter-tag-res">Research</label>
-            <input type="checkbox" name="filter-tag" id="filter-tag-des">
+            <input type="checkbox" name="filter-tag" id="filter-tag-des" [checked]="task.tags.includes('design') ? 'checked' : ''">
             <label class="checkbox-label" for="filter-tag-des">Design</label>
-            <input type="checkbox" name="filter-tag" id="filter-tag-dev">
+            <input type="checkbox" name="filter-tag" id="filter-tag-dev" [checked]="task.tags.includes('development') ? 'checked' : ''">
             <label class="checkbox-label" for="filter-tag-dev">Development</label>
          </div>
       </section>
       <section class="flex-col">
          <h2>Описание</h2>
-         <textarea class="block" name="" id="" cols="30" rows="10" placeholder="description goes here..."></textarea>
+         <textarea class="block" name="" id="" cols="30" rows="10" placeholder="description goes here...">{{ task.description || '' }}</textarea>
       </section>
       <button class="button" routerLink="/task">Сохранить</button>
    </div>

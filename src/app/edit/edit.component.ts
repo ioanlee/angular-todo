@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router'
+import database from '../db.json'
 
 @Component({
   selector: 'app-edit',
@@ -7,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
+  ngOnInit(): void { }
 
-  ngOnInit(): void {
-  }
-
+  db = database
+  id = Number(this.route.snapshot.params['id']) || NaN
+  task: any = this.db.find(t => t.id === this.id)
 }

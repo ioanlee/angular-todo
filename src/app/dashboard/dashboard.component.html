@@ -29,11 +29,20 @@
             <label class="checkbox-label" for="filter-tag-development">Development</label>
          </section>
       </div>
+      <div *ngIf="isloading" class="skeleton skeleton-text">loading...</div>
    </aside>
    <div class="content flex-col">
       <nav class="flex-row">
          <button class="button" routerLink="/edit">Добавить задачу</button>
       </nav>
+      <!-- <div class="tasks flex-col">
+         <div class="task block flex-col">
+            <a class="skeleton">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolore laboriosam possimus nemo at, earum beatae quisquam quia excepturi impedit vitae! Voluptatibus ex facilis in quisquam odio fugit corporis quos quas.</a>
+            <span class="skeleton">Создано:</span>
+            <span class="skeleton">Приоритет:</span>
+            <span class="skeleton">Отметки:</span>
+         </div>
+      </div> -->
       <div class="tasks flex-col" *ngFor="let task of tasks">
          <div class="task block flex-col">
             <a routerLink="/task/{{ task.id }}">{{ task.title }}</a>

@@ -118,5 +118,22 @@ $blue: dodgerblue
 
                & > span:not(:last-of-type)::after
                   content: ','
-                  
-                  
+
+.skeleton
+   animation: skeleton-loading 1s linear infinite alternate
+   // opacity: .7
+
+   &-text
+      animation: text-loading .8s linear infinite alternate
+
+@keyframes background-loading
+   0%
+      background-color: hsl(200, 20%, 70%)
+   100%
+      background-color: hsl(200, 20%, 95%)
+
+@keyframes text-loading
+   0%
+      color: hsl(200, 20%, 40%)
+   100%
+      color: hsl(200, 20%, 80%)
