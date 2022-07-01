@@ -1,47 +1,4 @@
-export function convertTimestamp(timestamp:number) {
-var d = new Date(timestamp * 1000),
-	yyyy = d.getFullYear(),
-	mm = ('0' + (d.getMonth() + 1)).slice(-2),
-	dd = ('0' + d.getDate()).slice(-2),
-	hh = d.getHours(),
-	h = hh,
-	min = ('0' + d.getMinutes()).slice(-2),
-	time;
-
-if (hh > 12) h = hh - 12;
-else if (hh === 12) h = 12;
-
-// ie: 2014.03.24, 3:00
-time = `${yyyy}.${mm}.${dd}, ${h}:${min} UTC`
-return time;
-}
-
-export function time2TimeAgo(timestamp:number) {
-	// This function computes the delta between the
-	// provided timestamp and the current time, then test
-	// the delta for predefined ranges.
-
-	var d=new Date()
-	var now = Math.floor(d.getTime()/1000)
-	var seconds = now-timestamp
-
-	if (seconds > 10*24*3600) return convertTimestamp(timestamp)
-	if (seconds > 5*24*3600) return `${Math.floor(seconds/(24*3600))} дней назад`
-	if (seconds > 3*24*3600) return `${Math.floor(seconds/(24*3600))} дня назад`
-	if (seconds > 2*24*3600) return `позавчера`
-	if (seconds > 24*3600) return `вчера`
-	if (seconds > 5*3600) return `${Math.floor(seconds/3600)} часов назад`
-	if (seconds > 2*3600) return `${Math.floor(seconds/3600)} часа назад`
-	if (seconds > 3600) return `час назад`
-	if (seconds > 5*60) return `${Math.floor(seconds/60)} минут назад`
-	if (seconds > 2*60) return `${Math.floor(seconds/60)} минуты назад`
-	if (seconds > 60) return `минуту назад`
-	if (seconds > 0) return `${Math.floor(seconds)} секунд назад`
-	return convertTimestamp(timestamp)
-}
-
-
-export const db = [
+[
 	{
 		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 		"timestamp": 1395660658,

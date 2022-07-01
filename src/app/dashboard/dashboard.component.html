@@ -37,7 +37,7 @@
       <div class="tasks flex-col" *ngFor="let task of tasks">
          <div class="task block flex-col">
             <a routerLink="/task/{{ task.id }}">{{ task.title }}</a>
-            <span>Создано: {{ convertTimestamp(task.timestamp) }}</span>
+            <span>Создано: {{ time2TimeAgo(task.timestamp) }}</span>
             <span>Приоритет: {{ task.priority }}</span>
             <span>Отметки: <span *ngFor="let tag of task.tags">{{ tag }}</span></span>
          </div>
