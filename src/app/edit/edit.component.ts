@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
-import database from '../db.json'
+// import database from '../../server/db.json'
 
 @Component({
   selector: 'app-edit',
@@ -9,10 +9,17 @@ import database from '../db.json'
 })
 export class EditComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute) { }
-  ngOnInit(): void { }
-
-  db = database
+  task: any = {}
   id = Number(this.route.snapshot.params['id']) || NaN
-  task: any = this.db.find(t => t.id === this.id) || undefined
+
+  async getData() {
+    await fetch(`http://localhost:4201/tasks?&id=${this.id}`)
+      .then(res => res.json())
+      .then(data => this.task = (true) ? data[0] : {})
+      .catch(err => console.error(err))
+  }  
+
+  constructor(private route: ActivatedRoute) {}
+  
+  ngOnInit(): void { this.getData() }
 }

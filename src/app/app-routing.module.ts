@@ -9,7 +9,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent, loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
   { path: 'task/:id', component: TaskComponent, loadChildren: () => import('./task/task.module').then(m => m.TaskModule) },
   { path: 'edit', component: EditComponent, loadChildren: () => import('./edit/edit.module').then(m => m.EditModule) },
   { path: 'edit/:id', component: EditComponent, loadChildren: () => import('./edit/edit.module').then(m => m.EditModule) },

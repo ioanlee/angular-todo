@@ -3,9 +3,9 @@
       <div class="block flex-col">
          <section class="flex-col">
             <h2>Сортировка</h2>
-            <input type="radio" (input)="setSort(true)" name="sortby" id="sortby-newest" value="true" [defaultChecked]="true">
+            <input #descSort [value]="'desc'" type="radio" (input)="setSort(descSort)" name="sortby" id="sortby-newest" value="true" [defaultChecked]="true">
             <label class="radio-label" for="sortby-newest">Новые</label>
-            <input type="radio" (input)="setSort(false)" name="sortby" id="sortby-oldest">
+            <input #ascSort [value]="'asc'" type="radio" (input)="setSort(ascSort)" name="sortby" id="sortby-oldest">
             <label class="radio-label" for="sortby-oldest"  value="false">Старые</label>
          </section>
       </div>
@@ -28,8 +28,9 @@
             <input #developmentTagInput (input)="setFilterTag(developmentTagInput)" type="checkbox" name="filter-tag" value="development" id="filter-tag-development">
             <label class="checkbox-label" for="filter-tag-development">Development</label>
          </section>
+         <button (click)="loadData()">loadmore</button>
       </div>
-      <div *ngIf="isloading" class="skeleton skeleton-text">loading...</div>
+      <div *ngIf="isLoading" class="skeleton skeleton-text">loading...</div>
    </aside>
    <div class="content flex-col">
       <nav class="flex-row">
@@ -43,14 +44,16 @@
             <span class="skeleton">Отметки:</span>
          </div>
       </div> -->
-      <div class="tasks flex-col" *ngFor="let task of tasksToRender">
-         <div class="task block flex-col">
-            <a routerLink="/task/{{ task.id }}">{{ task.title }}</a>
-            <span>Создано: {{ time2TimeAgo(task.timestamp) }}</span>
-            <span>Приоритет: {{ task.priority }}</span>
-            <span>Отметки: <span *ngFor="let tag of task.tags">{{ tag }}</span></span>
+      <!-- <div *ngIf="tasks.length > 0"> -->
+         <div class="tasks flex-col" *ngFor="let task of tasks">
+            <div class="task block flex-col">
+               <a routerLink="/task/{{ task.id }}">{{ task.id }} {{ task.title }}</a>
+               <span>Создано: {{ convertTimestamp(task.timestamp) }}</span>
+               <span>Приоритет: {{ task.priority }}</span>
+               <span>Отметки: <span *ngFor="let tag of task.tags">{{ tag }}</span></span>
+            </div>
          </div>
-      </div>
-      <div infiniteScroll (scrolled)="loadMore()"></div>
+         <!-- <div infiniteScroll (scrolled)="loadMore()"></div> -->
+      <!-- </div> -->
    </div>
 </main>

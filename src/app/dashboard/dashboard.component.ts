@@ -1,6 +1,5 @@
+import { timestampToTimeAgo } from '../globals'
 import { Component, Input, OnInit } from '@angular/core';
-import { discardPeriodicTasks } from '@angular/core/testing';
-import { db, time2TimeAgo } from '../globals'
 
 interface Task {
 	"id": number,
@@ -18,72 +17,66 @@ interface Task {
 })
 export class DashboardComponent {
 
-	request = 'https://62be4f77be8ba3a10d511837.mockapi.io/tasks'
-	time2TimeAgo = time2TimeAgo
-	isloading = false
 	tasks: Task[] = []
-	tasksToRender: Task[] = []
-	filteredTasks: Task[] = []
-	filterTag:string[] = []
-	filterPriority:string[] = []
-	sortbyNewest:boolean = true
+	isLoading = false
+	convertTimestamp = timestampToTimeAgo
 
-	amountToRender = 5
-	fromTask = 0
-	toTask = this.amountToRender
+	reqBase: string = 'http://localhost:4201/tasks'
+	reqPage: number = 1
+	reqTags: string[] = []
+	reqOrder: string = 'desc'
+	reqLimit: number = 15
+	reqSortBy: string = "timestamp"	
+	reqPriority: string[] = []
+	
+	loadData() {	
+		this.isLoading = true
+		let stringTags = ''
+		let stringPriority = ''
+		this.reqTags.forEach(tag => stringTags += `&tags_like=${tag}`)
+		this.reqPriority.forEach(priority => stringPriority += `&priority=${priority}`)
+		const req = `
+			${this.reqBase}?
+			&_limit=${this.reqLimit}
+			&_page=${this.reqPage}
+			&_sort=${this.reqSortBy}
+			&_order=${this.reqOrder}
+			${stringPriority}
+			${stringTags}
+		`
+		this.getData(req)
+		this.reqPage++
+		setTimeout(() => this.isLoading = false ,800)
+	}
 
-	async getTasks() {
-		this.isloading = true
-		await fetch(this.request)
+	reloadData() {		
+		this.reqPage = 1
+		this.tasks = []
+		this.loadData()
+	}
+
+	async getData(req: string) {
+		await fetch(req)
 			.then(res => res.json())
-			.then(data => this.tasks = data)
-			.catch(err => console.error(err))
-		this.isloading = false
-		this.updateList()
-	}
-
-	async loadMore() {
-		// this.tasksToRender.push(this.filteredTasks.shift)
-		this.tasksToRender = []
-		for (let i = 0; i > 2; i++) this.tasksToRender.push(this.filteredTasks[i])
-		
-		// this.tasksToRender.length += this.amountToRender
-		// this.toTask += this.amountToRender
-	}
-
-	updateList() {
-		// у данного api не было возможности запроса промежутка,
-		// поэтому имплементирована визуальная симуляция подгрузки
-		scrollTo(0,0)
-		this.fromTask = 0
-		this.toTask = this.amountToRender
-		this.isloading = true
-		this.filteredTasks = this.tasks
-		this.filteredTasks = this.filteredTasks.filter(task => (!this.filterPriority.length) ? task : this.filterPriority.includes(task.priority))
-		this.filteredTasks = this.filteredTasks.filter(task => (!this.filterTag.length) ? task : this.filterTag.some(tag => task.tags.includes(tag)))
-		this.filteredTasks = this.filteredTasks.sort((a, b) => b.timestamp - a.timestamp)
-		if (!this.sortbyNewest) this.filteredTasks.reverse()
-		setTimeout(() => this.isloading = false ,800)
-		
-		this.tasksToRender = this.filteredTasks
+			.then(data => data.forEach((item: Task) => this.tasks.push(item)))
 	}
 
 	setFilterPriority(node:any) {
-		node.checked ? this.filterPriority.push(node.value) : this.filterPriority = this.filterPriority.filter(param => param != node.value)
-		this.updateList()
+		node.checked ? this.reqPriority.push(node.value) : this.reqPriority = this.reqPriority.filter(param => param != node.value)
+		this.reloadData()
 	}
 
 	setFilterTag(node:any) {
-		node.checked ? this.filterTag.push(node.value) : this.filterTag = this.filterTag.filter(param => param != node.value)
-		this.updateList()
+		node.checked ? this.reqTags.push(node.value) : this.reqTags = this.reqTags.filter(param => param != node.value)
+		this.reloadData()
 	}
 
-	setSort(byNewest:boolean) {
-		this.sortbyNewest = byNewest
-		this.updateList()
+	setSort(node:any) {
+		this.reqOrder = node.value
+		this.reloadData()
 	}
 
 	ngOnInit(): void {
-		this.getTasks()
+		this.loadData()
 	}
 }

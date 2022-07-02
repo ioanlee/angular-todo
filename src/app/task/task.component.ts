@@ -1,17 +1,6 @@
-import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { convertTimestamp } from '../globals'
-import database from '../db.json'
-
-interface Task {
-  "id": number,
-  "tags": string[],
-  "title": string,
-  "priority": string,
-  "timestamp": number,
-  "completed": boolean,
-  "description": string,
-}
+import { Component, OnInit } from '@angular/core'
+import { timestampToString } from '../globals'
 
 @Component({
   selector: 'app-task',
@@ -20,12 +9,18 @@ interface Task {
 })
 export class TaskComponent implements OnInit {
 
-	convertTimestamp = convertTimestamp
-  db: Task[] = database
+  task: any = {}
   id = Number(this.route.snapshot.params['id'])
-  task: any = this.db.find(t => t.id === this.id)
+	convertTimestamp = timestampToString
 
-  constructor(private route: ActivatedRoute) { }
-  ngOnInit(): void {}
+  async getData() {
+    await fetch(`http://localhost:4201/tasks?&id=${this.id}`)
+      .then(res => res.json())
+      .then(data => this.task = data[0])
+      .catch(err => console.error(err))
+  }
 
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit(): void { this.getData() }
 }
