@@ -12,7 +12,7 @@ const routes: Routes = [
   declarations: [TaskComponent],
   exports: [RouterModule],
   imports: [
-    RouterModule.forChild(routes),
+    RouterModule.forRoot(routes),
     CommonModule,
   ]
 })
