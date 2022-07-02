@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { TaskComponent } from './task.component';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -8,7 +9,11 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  declarations: [TaskComponent],
+  exports: [RouterModule],
+  imports: [
+    RouterModule.forChild(routes),
+    CommonModule,
+  ]
 })
 export class TaskModule { }

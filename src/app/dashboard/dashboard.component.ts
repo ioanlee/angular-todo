@@ -29,6 +29,12 @@ export class DashboardComponent {
 	reqSortBy: string = "id"	
 	reqPriority: string[] = []
 
+	reloadData() {		
+		this.reqPage = 1
+		this.tasks = []
+		this.loadData()
+	}
+
 	async loadData() {
 		this.isLoading = true
 		let stringTags = ''
@@ -49,12 +55,6 @@ export class DashboardComponent {
 			.then(data => data.forEach((item: Task) => this.tasks.push(item)))
 			.catch(err => console.error(err))
 		setTimeout(() => this.isLoading = false, 500)
-	}
-
-	reloadData() {		
-		this.reqPage = 1
-		this.tasks = []
-		this.loadData()
 	}
 
 	setPriorities(node:any) {

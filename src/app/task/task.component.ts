@@ -12,6 +12,7 @@ interface Task {
 	"completed": boolean,
 	"description": string,
  }
+
 @Component({
 	selector: 'app-task',
 	templateUrl: './task.component.html',
