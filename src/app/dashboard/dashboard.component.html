@@ -43,7 +43,7 @@
             <span class="skeleton">Отметки:</span>
          </div>
       </div> -->
-      <div class="tasks flex-col" *ngFor="let task of tasks">
+      <div class="tasks flex-col" *ngFor="let task of tasksToRender">
          <div class="task block flex-col">
             <a routerLink="/task/{{ task.id }}">{{ task.title }}</a>
             <span>Создано: {{ time2TimeAgo(task.timestamp) }}</span>
@@ -51,5 +51,6 @@
             <span>Отметки: <span *ngFor="let tag of task.tags">{{ tag }}</span></span>
          </div>
       </div>
+      <div infiniteScroll (scrolled)="loadMore()"></div>
    </div>
 </main>

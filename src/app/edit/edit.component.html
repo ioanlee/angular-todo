@@ -7,15 +7,15 @@
    <div class="flex-col block edit">
       <section class="flex-col">
          <h2>Название задачи</h2>
-         <input class="block" type="text" value="{{ task.title || '' }}">
+         <input class="block" type="text" value="{{ (task) ? task.title : '' }}">
       </section>
       <section class="flex-col not-full-width">
          <h2>Приоритет</h2>
-         <select class="block" name="" id="">
-            <option value="normal" [selected]="task.priority === 'normal'">Normal</option>
-            <option value="high" [selected]="task.priority === 'high'">High</option>
-            <option value="low" [selected]="task.priority === 'low'">Low</option>
-         </select>
+            <select class="block" name="" id="">
+               <option value="normal" [selected]="task.priority === 'normal'">Normal</option>
+               <option value="high" [selected]="task.priority === 'high'">High</option>
+               <option value="low" [selected]="task.priority === 'low'">Low</option>
+            </select>
       </section>
       <section class="flex-col not-full-width">
          <h2>Отметки</h2>
@@ -30,7 +30,7 @@
       </section>
       <section class="flex-col">
          <h2>Описание</h2>
-         <textarea class="block" name="" id="" cols="30" rows="10" placeholder="description goes here...">{{ task.description || '' }}</textarea>
+         <textarea class="block" name="" id="" cols="30" rows="10" placeholder="description goes here...">{{ (task) ? task.description : '' }}</textarea>
       </section>
       <button class="button" routerLink="/task">Сохранить</button>
    </div>

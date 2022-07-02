@@ -30,6 +30,8 @@ export function time2TimeAgo(timestamp:number) {
 	if (seconds > 3*24*3600) return `${Math.floor(seconds/(24*3600))} дня назад`
 	if (seconds > 2*24*3600) return `позавчера`
 	if (seconds > 24*3600) return `вчера`
+	if (seconds > 22*3600) return `${Math.floor(seconds/3600)} часа назад`
+	if (seconds > 21*3600) return `${Math.floor(seconds/3600)} час назад`
 	if (seconds > 5*3600) return `${Math.floor(seconds/3600)} часов назад`
 	if (seconds > 2*3600) return `${Math.floor(seconds/3600)} часа назад`
 	if (seconds > 3600) return `час назад`

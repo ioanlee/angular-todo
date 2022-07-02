@@ -14,5 +14,5 @@ export class EditComponent implements OnInit {
 
   db = database
   id = Number(this.route.snapshot.params['id']) || NaN
-  task: any = this.db.find(t => t.id === this.id)
+  task: any = this.db.find(t => t.id === this.id) || undefined
 }

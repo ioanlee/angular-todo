@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { discardPeriodicTasks } from '@angular/core/testing';
-import { db, time2TimeAgo } from '../globals';
+import { db, time2TimeAgo } from '../globals'
 
 interface Task {
 	"id": number,
@@ -20,45 +20,70 @@ export class DashboardComponent {
 
 	request = 'https://62be4f77be8ba3a10d511837.mockapi.io/tasks'
 	time2TimeAgo = time2TimeAgo
-	sortbyNewest:boolean = true
-	filterPriority:string[] = []
-	filterTag:string[] = []
-	tasks:any = []
 	isloading = false
+	tasks: Task[] = []
+	tasksToRender: Task[] = []
+	filteredTasks: Task[] = []
+	filterTag:string[] = []
+	filterPriority:string[] = []
+	sortbyNewest:boolean = true
 
-	async setTasks() {
+	amountToRender = 5
+	fromTask = 0
+	toTask = this.amountToRender
+
+	async getTasks() {
 		this.isloading = true
-		let filtered: Task[] = []
 		await fetch(this.request)
 			.then(res => res.json())
-			.then(data => filtered = data)
-			.then(data => console.log({filtered, db}))
+			.then(data => this.tasks = data)
 			.catch(err => console.error(err))
 		this.isloading = false
-		// filtered = db
-		filtered = filtered.filter(task => (!this.filterPriority.length) ? task : this.filterPriority.includes(task.priority))
-		filtered = filtered.filter(task => (!this.filterTag.length) ? task : this.filterTag.some(tag => task.tags.includes(tag)))
-		filtered = filtered.sort((a, b) => b.timestamp - a.timestamp)
-		if (!this.sortbyNewest) filtered.reverse()
-		this.tasks = filtered
+		this.updateList()
+	}
+
+	async loadMore() {
+		// this.tasksToRender.push(this.filteredTasks.shift)
+		this.tasksToRender = []
+		for (let i = 0; i > 2; i++) this.tasksToRender.push(this.filteredTasks[i])
+		
+		// this.tasksToRender.length += this.amountToRender
+		// this.toTask += this.amountToRender
+	}
+
+	updateList() {
+		// у данного api не было возможности запроса промежутка,
+		// поэтому имплементирована визуальная симуляция подгрузки
+		scrollTo(0,0)
+		this.fromTask = 0
+		this.toTask = this.amountToRender
+		this.isloading = true
+		this.filteredTasks = this.tasks
+		this.filteredTasks = this.filteredTasks.filter(task => (!this.filterPriority.length) ? task : this.filterPriority.includes(task.priority))
+		this.filteredTasks = this.filteredTasks.filter(task => (!this.filterTag.length) ? task : this.filterTag.some(tag => task.tags.includes(tag)))
+		this.filteredTasks = this.filteredTasks.sort((a, b) => b.timestamp - a.timestamp)
+		if (!this.sortbyNewest) this.filteredTasks.reverse()
+		setTimeout(() => this.isloading = false ,800)
+		
+		this.tasksToRender = this.filteredTasks
 	}
 
 	setFilterPriority(node:any) {
 		node.checked ? this.filterPriority.push(node.value) : this.filterPriority = this.filterPriority.filter(param => param != node.value)
-		this.setTasks()
+		this.updateList()
 	}
 
 	setFilterTag(node:any) {
 		node.checked ? this.filterTag.push(node.value) : this.filterTag = this.filterTag.filter(param => param != node.value)
-		this.setTasks()
+		this.updateList()
 	}
 
 	setSort(byNewest:boolean) {
 		this.sortbyNewest = byNewest
-		this.setTasks()
+		this.updateList()
 	}
 
 	ngOnInit(): void {
-		this.setTasks()
+		this.getTasks()
 	}
 }
