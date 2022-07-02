@@ -21,32 +21,34 @@ export class DashboardComponent {
 	isLoading = false
 	convertTimestamp = timestampToTimeAgo
 
-	reqBase: string = 'http://localhost:4201/tasks'
+	reqURL: string = 'http://localhost:4201/tasks'
 	reqPage: number = 1
 	reqTags: string[] = []
 	reqOrder: string = 'desc'
 	reqLimit: number = 15
-	reqSortBy: string = "timestamp"	
+	reqSortBy: string = "id"	
 	reqPriority: string[] = []
-	
-	loadData() {	
+
+	async loadData() {
 		this.isLoading = true
 		let stringTags = ''
 		let stringPriority = ''
 		this.reqTags.forEach(tag => stringTags += `&tags_like=${tag}`)
 		this.reqPriority.forEach(priority => stringPriority += `&priority=${priority}`)
-		const req = `
-			${this.reqBase}?
+		const request = `
+			${this.reqURL}?
 			&_limit=${this.reqLimit}
-			&_page=${this.reqPage}
+			&_page=${this.reqPage++}
 			&_sort=${this.reqSortBy}
 			&_order=${this.reqOrder}
 			${stringPriority}
 			${stringTags}
 		`
-		this.getData(req)
-		this.reqPage++
-		setTimeout(() => this.isLoading = false ,800)
+		await fetch(request)
+			.then(res => res.json())
+			.then(data => data.forEach((item: Task) => this.tasks.push(item)))
+			.catch(err => console.error(err))
+		setTimeout(() => this.isLoading = false, 500)
 	}
 
 	reloadData() {		
@@ -55,23 +57,17 @@ export class DashboardComponent {
 		this.loadData()
 	}
 
-	async getData(req: string) {
-		await fetch(req)
-			.then(res => res.json())
-			.then(data => data.forEach((item: Task) => this.tasks.push(item)))
-	}
-
-	setFilterPriority(node:any) {
+	setPriorities(node:any) {
 		node.checked ? this.reqPriority.push(node.value) : this.reqPriority = this.reqPriority.filter(param => param != node.value)
 		this.reloadData()
 	}
 
-	setFilterTag(node:any) {
+	setTags(node:any) {
 		node.checked ? this.reqTags.push(node.value) : this.reqTags = this.reqTags.filter(param => param != node.value)
 		this.reloadData()
 	}
 
-	setSort(node:any) {
+	setOrder(node:any) {
 		this.reqOrder = node.value
 		this.reloadData()
 	}

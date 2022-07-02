@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
-// import database from '../../server/db.json'
 
 @Component({
   selector: 'app-edit',
@@ -9,15 +8,28 @@ import { ActivatedRoute } from '@angular/router'
 })
 export class EditComponent implements OnInit {
 
-  task: any = {}
   id = Number(this.route.snapshot.params['id']) || NaN
+  task: any = {}
+  reqURL: string = 'http://localhost:4201/tasks'
+	reqId: number = Number(this.route.snapshot.params['id'])
 
   async getData() {
-    await fetch(`http://localhost:4201/tasks?&id=${this.id}`)
+    await fetch(`${this.reqURL}?&id=${this.id}`)
       .then(res => res.json())
       .then(data => this.task = (true) ? data[0] : {})
       .catch(err => console.error(err))
-  }  
+  }
+
+	async editTask() {
+		const request = `${this.reqURL}${this.reqId}`
+		await fetch(request, { 
+			headers: { 'Content-type': 'application/json' },
+			method: 'PUT',
+			body: JSON.stringify({
+				completed: true
+			})
+		}).catch(err => console.error(err))
+	}
 
   constructor(private route: ActivatedRoute) {}
   

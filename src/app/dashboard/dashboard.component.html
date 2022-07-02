@@ -3,32 +3,31 @@
       <div class="block flex-col">
          <section class="flex-col">
             <h2>Сортировка</h2>
-            <input #descSort [value]="'desc'" type="radio" (input)="setSort(descSort)" name="sortby" id="sortby-newest" value="true" [defaultChecked]="true">
+            <input #descSort [value]="'desc'" type="radio" (input)="setOrder(descSort)" name="sortby" id="sortby-newest" value="true" [defaultChecked]="true">
             <label class="radio-label" for="sortby-newest">Новые</label>
-            <input #ascSort [value]="'asc'" type="radio" (input)="setSort(ascSort)" name="sortby" id="sortby-oldest">
+            <input #ascSort [value]="'asc'" type="radio" (input)="setOrder(ascSort)" name="sortby" id="sortby-oldest">
             <label class="radio-label" for="sortby-oldest"  value="false">Старые</label>
          </section>
       </div>
       <div class="flex-col block task">
          <section class="flex-col">
             <h2>Приоритет</h2>
-            <input #highPriorityInput (input)="setFilterPriority(highPriorityInput)" type="checkbox" name="filter-priority" id="filter-priority-high" value="high">
+            <input #highPriorityInput (input)="setPriorities(highPriorityInput)" type="checkbox" name="filter-priority" id="filter-priority-high" value="high">
             <label class="checkbox-label" for="filter-priority-high">High</label>
-            <input #normalPriorityInput (input)="setFilterPriority(normalPriorityInput)" type="checkbox" name="filter-priority" id="filter-priority-normal" value="normal">
+            <input #normalPriorityInput (input)="setPriorities(normalPriorityInput)" type="checkbox" name="filter-priority" id="filter-priority-normal" value="normal">
             <label class="checkbox-label" for="filter-priority-normal">Normal</label>
-            <input #lowPriorityInput (input)="setFilterPriority(lowPriorityInput)" type="checkbox" name="filter-priority" id="filter-priority-low" value="low">
+            <input #lowPriorityInput (input)="setPriorities(lowPriorityInput)" type="checkbox" name="filter-priority" id="filter-priority-low" value="low">
             <label class="checkbox-label" for="filter-priority-low">Low</label>
          </section>
          <section class="flex-col">
             <h2>Отметка</h2>
-            <input #researchTagInput (input)="setFilterTag(researchTagInput)" type="checkbox" name="filter-tag" value="research" id="filter-tag-research">
+            <input #researchTagInput (input)="setTags(researchTagInput)" type="checkbox" name="filter-tag" value="research" id="filter-tag-research">
             <label class="checkbox-label" for="filter-tag-research">Research</label>
-            <input #designTagInput (input)="setFilterTag(designTagInput)" type="checkbox" name="filter-tag" value="design" id="filter-tag-design">
+            <input #designTagInput (input)="setTags(designTagInput)" type="checkbox" name="filter-tag" value="design" id="filter-tag-design">
             <label class="checkbox-label" for="filter-tag-design">Design</label>
-            <input #developmentTagInput (input)="setFilterTag(developmentTagInput)" type="checkbox" name="filter-tag" value="development" id="filter-tag-development">
+            <input #developmentTagInput (input)="setTags(developmentTagInput)" type="checkbox" name="filter-tag" value="development" id="filter-tag-development">
             <label class="checkbox-label" for="filter-tag-development">Development</label>
          </section>
-         <button (click)="loadData()">loadmore</button>
       </div>
       <div *ngIf="isLoading" class="skeleton skeleton-text">loading...</div>
    </aside>
@@ -36,24 +35,18 @@
       <nav class="flex-row">
          <button class="button" routerLink="/edit">Добавить задачу</button>
       </nav>
-      <!-- <div class="tasks flex-col">
-         <div class="task block flex-col">
-            <a class="skeleton">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolore laboriosam possimus nemo at, earum beatae quisquam quia excepturi impedit vitae! Voluptatibus ex facilis in quisquam odio fugit corporis quos quas.</a>
-            <span class="skeleton">Создано:</span>
-            <span class="skeleton">Приоритет:</span>
-            <span class="skeleton">Отметки:</span>
-         </div>
-      </div> -->
-      <!-- <div *ngIf="tasks.length > 0"> -->
          <div class="tasks flex-col" *ngFor="let task of tasks">
             <div class="task block flex-col">
-               <a routerLink="/task/{{ task.id }}">{{ task.id }} {{ task.title }}</a>
+               <a routerLink="/task/{{ task.id }}">{{ task.title }}</a>
                <span>Создано: {{ convertTimestamp(task.timestamp) }}</span>
                <span>Приоритет: {{ task.priority }}</span>
                <span>Отметки: <span *ngFor="let tag of task.tags">{{ tag }}</span></span>
             </div>
          </div>
-         <!-- <div infiniteScroll (scrolled)="loadMore()"></div> -->
-      <!-- </div> -->
+         <div 
+            infiniteScroll
+            [infiniteScrollDistance]="0"
+            (scrolled)="loadData()
+         "></div>
    </div>
 </main>
