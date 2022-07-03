@@ -1,20 +1,20 @@
 <main class="flex-col">   
    <nav class="flex-row">
       <div *ngIf="id; then thenBlock else elseBlock"></div>
-      <ng-template #thenBlock><button class="button inverted" routerLink="/task/{{ id }}">Назад</button></ng-template>
+      <ng-template #thenBlock><button class="button inverted" routerLink="/task/{{ task.id }}">Назад</button></ng-template>
       <ng-template #elseBlock><button class="button inverted" routerLink="/">Назад</button></ng-template>
    </nav>
    <div class="flex-col block edit">
       <section class="flex-col">
          <h2>Название задачи</h2>
-         <input class="block" type="text" value="{{ (task) ? task.title : '' }}">
+         <input #inputTitle class="block" type="text" value="{{ (task) ? task.title : '' }}">
       </section>
       <section class="flex-col not-full-width">
          <h2>Приоритет</h2>
-            <select class="block" name="" id="">
-               <option value="normal" [selected]="task.priority === 'normal'">Normal</option>
-               <option value="high" [selected]="task.priority === 'high'">High</option>
-               <option value="low" [selected]="task.priority === 'low'">Low</option>
+            <select #inputPriority class="block" name="" id="">
+               <option value="normal" [selected]="task.priority === 'normal'" (click)="setPriority('normal')">Normal</option>
+               <option value="high" [selected]="task.priority === 'high'" (click)="setPriority('high')">High</option>
+               <option value="low" [selected]="task.priority === 'low'" (click)="setPriority('low')">Low</option>
             </select>
       </section>
       <section class="flex-col not-full-width">
@@ -30,8 +30,8 @@
       </section>
       <section class="flex-col">
          <h2>Описание</h2>
-         <textarea class="block" name="" id="" cols="30" rows="10" placeholder="description goes here...">{{ (task) ? task.description : '' }}</textarea>
+         <textarea #inputDescription class="block" name="" id="" cols="30" rows="10" placeholder="description goes here...">{{ (task) ? task.description : '' }}</textarea>
       </section>
-      <button class="button" routerLink="/task">Сохранить</button>
+      <button class="button" (click)="submitData()" routerLink="/task">Сохранить</button>
    </div>
 </main>

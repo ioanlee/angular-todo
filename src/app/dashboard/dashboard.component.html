@@ -43,10 +43,11 @@
                <span>Отметки: <span *ngFor="let tag of task.tags">{{ tag }}</span></span>
             </div>
          </div>
-         <!-- <div 
+         <div 
             infiniteScroll
             [infiniteScrollDistance]="0"
             (scrolled)="loadData()
-         "></div> -->
+         "></div>
+         <div *ngIf="isEndOfList">Это всё :)</div>
    </div>
 </main>

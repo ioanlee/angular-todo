@@ -33,6 +33,6 @@ export function timestampToTimeAgo(timestamp:number) {
 	if (seconds > 5*60) return `${Math.floor(seconds/60)} минут назад`
 	if (seconds > 2*60) return `${Math.floor(seconds/60)} минуты назад`
 	if (seconds > 60) return `минуту назад`
-	if (seconds > 0) return `${Math.floor(seconds)} секунд назад`
+	if (seconds > 0) return `только что`
 	return timestampToString(timestamp)
 }

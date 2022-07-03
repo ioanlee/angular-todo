@@ -29,21 +29,15 @@ export class TaskComponent implements OnInit {
 
 
   	async getData() {
-		const request = `
-			${this.reqURL}?
-			&id=${this.reqId}
-		`
+		const request = `${this.reqURL}/${this.reqId}`
 		await fetch(request)
 			.then(res => res.json())
-			.then(data => this.task = data[0])
+			.then(data => this.task = data)
 			.catch(err => console.error(err))
   	}
 
 	async deleteTask() {
-		const request = `
-			${this.reqURL}/
-			${this.reqId}
-		`
+		const request = `${this.reqURL}/${this.reqId}`
 		await fetch(request, {
 			method: 'DELETE',
 		}).catch(err => console.error(err))

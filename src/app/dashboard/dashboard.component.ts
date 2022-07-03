@@ -1,5 +1,5 @@
 import { timestampToTimeAgo } from '../globals'
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core'
 
 interface Task {
 	"id": number,
@@ -19,6 +19,7 @@ export class DashboardComponent {
 
 	tasks: Task[] = []
 	isLoading = false
+	isEndOfList = false
 	convertTimestamp = timestampToTimeAgo
 
 	reqURL: string = 'http://localhost:4201/tasks'
@@ -26,11 +27,12 @@ export class DashboardComponent {
 	reqTags: string[] = []
 	reqOrder: string = 'desc'
 	reqLimit: number = 15
-	reqSortBy: string = "id"	
+	reqSortBy: string = "timestamp"	
 	reqPriority: string[] = []
 
 	reloadData() {		
 		this.reqPage = 1
+		this.isEndOfList = false
 		this.tasks = []
 		this.loadData()
 	}
@@ -52,7 +54,7 @@ export class DashboardComponent {
 		`
 		await fetch(request)
 			.then(res => res.json())
-			.then(data => data.forEach((item: Task) => this.tasks.push(item)))
+			.then(data => data.length ? data.forEach((item: Task) => this.tasks.push(item)) : this.isEndOfList = true)
 			.catch(err => console.error(err))
 		setTimeout(() => this.isLoading = false, 500)
 	}
