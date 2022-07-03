@@ -19,10 +19,10 @@ interface Task {
 	styleUrls: ['./task.component.sass']
 })
 export class TaskComponent implements OnInit {
-	
-	constructor(private route: ActivatedRoute) {}
-	convertTimestamp = timestampToString
 
+	convertTimestamp = timestampToString
+	reqURL: string = 'http://localhost:4201/tasks'
+	reqId: number = Number(this.route.snapshot.params['id'])
 	task: Task = {
 		"id": 0,
 		"tags": [],
@@ -32,9 +32,6 @@ export class TaskComponent implements OnInit {
 		"completed": false,
 		"description": ''
 	 }
-	reqURL: string = 'http://localhost:4201/tasks'
-	reqId: number = Number(this.route.snapshot.params['id'])
-
 
   	async getData() {
 		const request = `${this.reqURL}/${this.reqId}`
@@ -65,4 +62,6 @@ export class TaskComponent implements OnInit {
 	ngOnInit(): void { 
 		this.getData()
 	}
+	
+	constructor(private route: ActivatedRoute) {}
 }

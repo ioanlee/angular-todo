@@ -23,6 +23,14 @@ export class EditComponent implements OnInit {
   @ViewChild("inputPriority", { static: true }) inputPriority!: ElementRef
   @ViewChild("inputDescription", { static: true }) inputDescription!: ElementRef
   
+  reqURL: string = 'http://localhost:4201/tasks'
+	reqId: number = Number(this.route.snapshot.params['id'])
+  
+  prevTags: string[] = []
+  prevTitle: string = ''
+  prevPriority: string = ''
+  prevDescription: string = ''
+
   task: Task = {
     "id": 0,
     "tags": [],
@@ -32,13 +40,6 @@ export class EditComponent implements OnInit {
     "completed": false,
     "description": ''
   }
-  reqURL: string = 'http://localhost:4201/tasks'
-	reqId: number = Number(this.route.snapshot.params['id'])
-
-  prevTags: string[] = []
-  prevTitle: string = ''
-  prevPriority: string = ''
-  prevDescription: string = ''
 
   async getData() {
     await fetch(`${this.reqURL}/${this.reqId}`)
@@ -47,6 +48,7 @@ export class EditComponent implements OnInit {
       .catch(err => console.error(err))
   }
 
+  // edit & create task methods, to be finished
   async submitData() {
 
     const newTags: string[] = []
