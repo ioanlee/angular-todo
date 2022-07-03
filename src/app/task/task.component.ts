@@ -23,7 +23,15 @@ export class TaskComponent implements OnInit {
 	constructor(private route: ActivatedRoute) {}
 	convertTimestamp = timestampToString
 
-	task: any = {}
+	task: Task = {
+		"id": 0,
+		"tags": [],
+		"title": '',
+		"priority": '',
+		"timestamp": 0,
+		"completed": false,
+		"description": ''
+	 }
 	reqURL: string = 'http://localhost:4201/tasks'
 	reqId: number = Number(this.route.snapshot.params['id'])
 

@@ -59,17 +59,18 @@ export class DashboardComponent {
 		setTimeout(() => this.isLoading = false, 500)
 	}
 
-	setPriorities(node:any) {
+	setPriorities(node: any) {
 		node.checked ? this.reqPriority.push(node.value) : this.reqPriority = this.reqPriority.filter(param => param != node.value)
 		this.reloadData()
 	}
 
-	setTags(node:any) {
+	setTags(node: any) {
+		console.log(node)
 		node.checked ? this.reqTags.push(node.value) : this.reqTags = this.reqTags.filter(param => param != node.value)
 		this.reloadData()
 	}
 
-	setOrder(node:any) {
+	setOrder(node: any) {
 		this.reqOrder = node.value
 		this.reloadData()
 	}

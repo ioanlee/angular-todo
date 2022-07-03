@@ -23,7 +23,15 @@ export class EditComponent implements OnInit {
   @ViewChild("inputPriority", { static: true }) inputPriority!: ElementRef
   @ViewChild("inputDescription", { static: true }) inputDescription!: ElementRef
   
-  task: any = {}
+  task: Task = {
+    "id": 0,
+    "tags": [],
+    "title": '',
+    "priority": '',
+    "timestamp": 0,
+    "completed": false,
+    "description": ''
+  }
   reqURL: string = 'http://localhost:4201/tasks'
 	reqId: number = Number(this.route.snapshot.params['id'])
 
@@ -32,18 +40,11 @@ export class EditComponent implements OnInit {
   prevPriority: string = ''
   prevDescription: string = ''
 
-  priority: string = ''
-
   async getData() {
     await fetch(`${this.reqURL}/${this.reqId}`)
       .then(res => res.json())
       .then(data => this.task = (true) ? data : {})
       .catch(err => console.error(err))
-    
-    console.log(this.inputTags)
-    console.log(this.inputTags.nativeElement.checked)
-    console.log(this.inputTags.nativeElement.children[0].checked)
-    this.inputPriority.nativeElement.children.forEach((option: any) => console.log(option.checked))
   }
 
   async submitData() {
@@ -86,11 +87,6 @@ export class EditComponent implements OnInit {
     }
     if (method === 'POST') alert('New task created successfully')
     if (method === 'PATCH') alert(`Task with id ${this.task.id} edited successfully`)
-  }
-
-  setPriority(s: string) {
-    this.priority = s
-    console.log(this.priority)
   }
 
   constructor(private route: ActivatedRoute) { }
