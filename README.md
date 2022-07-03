@@ -3,10 +3,10 @@
 выполнить и на любом другом фреймворке/библиотеке.
 
 ## Запуск
-npm i
-npm run server
-npm run build:ssr
-npm run serve:ssr
+- npm i
+- npm run server
+- npm run build:ssr
+- npm run serve:ssr
 
 ## Задача
 Реализовать простой менеджер задач (только фронт, без бэкенда),
