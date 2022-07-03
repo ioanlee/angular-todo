@@ -1,6 +1,6 @@
 <main class="flex-col">   
    <nav class="flex-row">
-      <div *ngIf="id; then thenBlock else elseBlock"></div>
+      <div *ngIf="reqId; then thenBlock else elseBlock"></div>
       <ng-template #thenBlock><button class="button inverted" routerLink="/task/{{ task.id }}">Назад</button></ng-template>
       <ng-template #elseBlock><button class="button inverted" routerLink="/">Назад</button></ng-template>
    </nav>

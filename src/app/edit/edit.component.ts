@@ -23,7 +23,6 @@ export class EditComponent implements OnInit {
   @ViewChild("inputPriority", { static: true }) inputPriority!: ElementRef
   @ViewChild("inputDescription", { static: true }) inputDescription!: ElementRef
   
-  id = Number(this.route.snapshot.params['id'])
   task: any = {}
   reqURL: string = 'http://localhost:4201/tasks'
 	reqId: number = Number(this.route.snapshot.params['id'])
@@ -36,7 +35,7 @@ export class EditComponent implements OnInit {
   priority: string = ''
 
   async getData() {
-    await fetch(`${this.reqURL}/${this.id}`)
+    await fetch(`${this.reqURL}/${this.reqId}`)
       .then(res => res.json())
       .then(data => this.task = (true) ? data : {})
       .catch(err => console.error(err))
@@ -54,11 +53,10 @@ export class EditComponent implements OnInit {
     const newPriority: string = ''
     const newDescription: string = this.inputDescription.nativeElement.value
     
-    const method: string = isNaN(this.id) ? 'POST' : 'PATCH'
+    const method: string = isNaN(this.reqId) ? 'POST' : 'PATCH'
 		const request: string = (method === "PATCH") ? `${this.reqURL}/${this.reqId}` : `${this.reqURL}`
 
     if (method === 'POST') {
-
       // await fetch(request, { 
       //   headers: { 'Content-type': 'application/json' },
       //   method: method,
@@ -67,12 +65,11 @@ export class EditComponent implements OnInit {
       //     // "tags": string[],
       //     // "title": string,
       //     // "priority": string,
-          // "timestamp": Math.floor(new Date().getTime()/1000),
+      //     "timestamp": Math.floor(new Date().getTime()/1000),
       //     // "completed": boolean,
       //     // "description": string,
       //   })
       // }).catch(err => console.error(err))
-
     }
     else if (method === 'PATCH') {
 
@@ -86,10 +83,9 @@ export class EditComponent implements OnInit {
           "description": newDescription,
       	})
       }).catch(err => console.error(err))
-
     }
-    if (method === 'POST') alert('New task created successfully, reload page')
-    if (method === 'PATCH') alert(`Task with id ${this.task.id} edited successfully, reload page`)
+    if (method === 'POST') alert('New task created successfully')
+    if (method === 'PATCH') alert(`Task with id ${this.task.id} edited successfully`)
   }
 
   setPriority(s: string) {
